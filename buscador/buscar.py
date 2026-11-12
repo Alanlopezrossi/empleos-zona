@@ -57,6 +57,7 @@ RUBROS = [
     "Tecnología",
     "Cuidado de personas y limpieza",
     "Sector público",
+    "Seguridad",
     "Otros",
 ]
 
@@ -314,18 +315,20 @@ EXCLUIR = re.compile(
     r"|tasa de|indec|estadistic|jubilad|subsidio|beca para estudiantes|perdid|extravi|robo|policial")
 RUBROS_CLAVE = [
     ("Bancos y finanzas", r"banco|bancari|financier|seguros|contable|contador"),
-    ("Salud", r"enfermer|medic|salud|hospital|clinica|farmac|kinesi|odontolog|psicolog"),
+    ("Salud", r"enfermer|medic|salud|hospital|clinica|farmac|kinesi|kineci|odontolog|psicolog"),
     ("Educación", r"docente|maestr|profesor|escuela|educaci|jardin"),
     ("Agro", r"agro|rural|campo|tambo|cosecha|ganader|agronom|tractor|feedlot|semilla|acopio"),
-    ("Gastronomía y hotelería", r"mozo|moza|cociner|gastronom|restaurant|\\bbar\\b|parrill|panader|hotel|bacher"),
-    ("Transporte y logística", r"chofer|camion|logistic|repart|deposito|transport|delivery"),
+    ("Gastronomía y hotelería", r"mozo|moza|cociner|gastronom|restaurant|\bbar\b|parrill|panader|hotel|bacher"),
+    ("Transporte y logística", r"chofer|camion|logistic|repart|deposito|transport|delivery|picking|polivalente"),
     ("Construcción y oficios", r"albanil|construcc|electricist|plomer|soldador|mecanic|carpinter|herrer|pintor|gasista|oficial"),
-    ("Industria y producción", r"operari|produccion|fabrica|planta|industri|laboratorio|frigorif|elaborador"),
-    ("Tecnología", r"programador|desarroll|sistemas|informatic|software|soporte tecnico|\\bit\\b"),
+    ("Industria y producción", r"operari|produccion|fabrica|planta|industri|laboratorio|frigorif|elaborador|mantenimiento"),
+    ("Tecnología", r"programador|desarroll|sistemas|informatic|software|soporte tecnico|\bit\b|\bqa\b|tester|erp|netsuite|shopify|ecommerce"),
     ("Cuidado de personas y limpieza", r"cuidador|ninera|limpieza|domestic|acompanante terapeut|geriatr"),
     ("Sector público", r"municipal|municipio|concurso|provincia de buenos aires|ministerio|intendencia"),
     ("Administración y oficina", r"administrativ|recepcion|secretari|oficina|rrhh|recursos humanos|data entry"),
-    ("Comercio y ventas", r"vendedor|ventas|comercial|cajer|repositor|atencion al cliente|preventista|supermercado|tienda|local"),
+    ("Comercio y ventas", r"vendedor|ventas|\bsales\b|comercial|comercios|cajer|repositor|relevador|asesor|atencion al cliente|preventista|supermercado|tienda|local"),
+    ("Seguridad", r"vigilador|seguridad|custodia"),
+    ("Construcción y oficios", r"tecnico"),
 ]
 
 
