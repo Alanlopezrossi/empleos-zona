@@ -285,9 +285,16 @@ def clasificar_lote(lote: list[dict]) -> dict[int, dict] | None:
                 log(f"  IA ocupada, espero {espera}s")
                 time.sleep(espera)
                 continue
-            r.raise_for_status()
-            contenido = r.json()["choices"][0]["message"]["content"]
-            datos = json.loads(contenido)
+            if r.status_code >= 400 or not r.text.strip():
+                raise RuntimeError(f"HTTP {r.status_code}: {r.text[:300]!r}")
+            try:
+                contenido = r.json()["choices"][0]["message"]["content"] or ""
+            except (ValueError, KeyError, IndexError) as e:
+                raise RuntimeError(f"respuesta inesperada HTTP {r.status_code}: {r.text[:300]!r}") from e
+            m = re.search(r"\{.*\}", contenido, re.S)
+            if not m:
+                raise RuntimeError(f"la IA no devolvió JSON: {contenido[:200]!r}")
+            datos = json.loads(m.group(0))
             return {int(x["n"]): x for x in datos.get("resultados", []) if "n" in x}
         except Exception as e:  # noqa: BLE001
             log(f"  error IA (intento {intento + 1}): {str(e)[:200]}")
