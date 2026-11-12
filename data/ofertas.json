@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-12T17:26-03:00",
+ "actualizado": "2026-11-12T17:40-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -43,6 +43,18 @@
   }
  },
  "ofertas": [
+  {
+   "id": "d2c53a043347b4e3",
+   "puesto": "Ayudante de producción",
+   "empresa": "Panadería de Saladillo",
+   "localidad": "Saladillo",
+   "rubro": "Gastronomía y hotelería",
+   "resumen": "Ayudante de producción turno mañana, enviar CV por WhatsApp.",
+   "fuente": "Redes sociales",
+   "url": "https://www.facebook.com/groups/ejemplo/posts/1",
+   "fecha": "2026-11-12",
+   "detectado": "2026-11-12"
+  },
   {
    "id": "daa0abfad40c53db",
    "puesto": "Administrativo/a de Atención al Cliente y Postventa",
