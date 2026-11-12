@@ -35,6 +35,11 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Probar IA
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python buscador/probar_ia.py
+
       - name: Buscar y clasificar ofertas
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
