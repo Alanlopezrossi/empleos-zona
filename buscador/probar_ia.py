@@ -1,13 +1,18 @@
 """Diagnóstico rápido de la conexión con GitHub Models (se puede borrar)."""
-import os, requests
+import os, subprocess, requests
 tok = os.environ["GITHUB_TOKEN"]
-for modelo in ["openai/gpt-4.1-mini", "openai/gpt-4o-mini"]:
-    for rf in (True, False):
-        body = {"model": modelo, "messages": [{"role": "user", "content": 'Respondé {"ok": true}'}]}
-        if rf:
-            body["response_format"] = {"type": "json_object"}
-        r = requests.post("https://models.github.ai/inference/chat/completions", json=body, timeout=60,
-                          headers={"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json",
-                                   "X-GitHub-Api-Version": "2022-11-28", "Content-Type": "application/json"},
-                          allow_redirects=False)
-        print(modelo, "json_format" if rf else "plain", r.status_code, dict((k, v) for k, v in r.headers.items() if k.lower() in ("content-type", "location", "x-ratelimit-remaining-requests", "server")), repr(r.text[:200]), flush=True)
+H = {"Authorization": f"Bearer {tok}", "Content-Type": "application/json"}
+body = {"model": "openai/gpt-4o-mini", "messages": [{"role": "user", "content": "Decí hola"}]}
+print("catalog:", requests.get("https://models.github.ai/catalog/models", headers=H, timeout=30).text[:150], flush=True)
+for url, b in [("https://models.github.ai/inference/chat/completions", body),
+               ("https://models.inference.ai.azure.com/chat/completions", {**body, "model": "gpt-4o-mini"})]:
+    try:
+        r = requests.post(url, json=b, headers=H, timeout=60)
+        print(url, r.status_code, r.headers.get("content-type"), repr(r.text[:250]), flush=True)
+    except Exception as e:
+        print(url, "EXC", e, flush=True)
+print(subprocess.run(["curl", "-sS", "-i", "https://models.github.ai/inference/chat/completions",
+      "-H", f"Authorization: Bearer {tok}", "-H", "Content-Type: application/json",
+      "-d", '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"hola"}]}'],
+      capture_output=True, text=True).stdout[:900], flush=True)
+print("env proxies:", {k: v for k, v in os.environ.items() if "proxy" in k.lower()}, flush=True)
