@@ -255,7 +255,8 @@ PROVEEDORES = [
      "clave": "unused", "modelo": os.environ.get("LLM7_MODELO") or "", "pausa": 3,
      "elegir_modelo": "https://api.llm7.io/v1/models"},
     {"nombre": "Pollinations", "url": "https://text.pollinations.ai/openai",
-     "clave": None, "modelo": "openai", "pausa": 46},  # anónimo: 1 respuesta cada 45 s
+     "clave": None, "modelo": "openai", "pausa": 46,  # anónimo: 1 respuesta cada 45 s
+     "elegir_modelo": "https://text.pollinations.ai/models"},
 ]
 if os.environ.get("IA_KEY"):
     PROVEEDORES.insert(0, {"nombre": "IA propia",
@@ -279,6 +280,18 @@ def elegir_modelo(prov: dict) -> None:
         log(f"  {prov['nombre']}: modelos disponibles: {', '.join(ids[:25])}")
         if prov["modelo"] in ids:
             return
+        if prov["nombre"] == "Pollinations":
+            # Preferir modelos sin "razonamiento" (gastan el límite de respuesta pensando)
+            lista = datos if isinstance(datos, list) else datos.get("data", [])
+            ok = [m.get("name") or m.get("id") for m in lista if isinstance(m, dict)
+                  and not m.get("reasoning") and m.get("tier", "anonymous") in ("anonymous", "free")
+                  and "text" in (m.get("output_modalities") or ["text"])
+                  and not re.search(r"audio|roblox|search|evil|uncensored", str(m.get("name")), re.I)]
+            log(f"  Pollinations: modelos anónimos sin razonamiento: {ok[:10]}")
+            prov["candidatos"] = ok[:4]
+            prov["modelo"] = prov["candidatos"].pop(0) if prov["candidatos"] else prov["modelo"]
+            log(f"  Pollinations: usando {prov['modelo']}")
+            return
         candidatos = []
         for pref in PREFERIDOS:
             candidatos += [i for i in ids if pref in i.lower() and i not in candidatos
@@ -298,7 +311,7 @@ def pedir_ia(sistema: str, usuario: str) -> tuple[dict, str] | None:
             continue  # falló demasiado en esta corrida: no insistir
         if prov.get("elegir_modelo"):
             elegir_modelo(prov)
-        cuerpo = {"model": prov["modelo"], "temperature": 0.1, "max_tokens": 4000,
+        cuerpo = {"model": prov["modelo"], "temperature": 0.1, "max_tokens": 4000, "reasoning_effort": "low",
                   "messages": [{"role": "system", "content": sistema},
                                {"role": "user", "content": usuario}]}
         headers = {"Content-Type": "application/json"}
@@ -327,6 +340,12 @@ def pedir_ia(sistema: str, usuario: str) -> tuple[dict, str] | None:
                     espera = min(int(float(r.headers.get("retry-after", "20"))), 60)
                     log(f"  {prov['nombre']} ocupada, espero {espera}s")
                     time.sleep(espera)
+                    continue
+                if r.status_code == 400 and prov.get("candidatos"):
+                    log(f"  {prov['nombre']}: {prov['modelo']} falló ({r.text[:120]!r}), pruebo otro")
+                    prov["modelo"] = prov["candidatos"].pop(0)
+                    cuerpo["model"] = prov["modelo"]
+                    time.sleep(prov["pausa"])
                     continue
                 if r.status_code >= 400:
                     raise RuntimeError(f"HTTP {r.status_code}: {r.text[:200]!r}")
