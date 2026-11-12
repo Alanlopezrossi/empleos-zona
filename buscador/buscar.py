@@ -145,6 +145,13 @@ def computrabajo(loc: dict) -> list[dict]:
                 continue
             bloque = a.find_parent("article") or a.parent
             lineas = [l.strip() for l in bloque.get_text("\n").split("\n") if l.strip()]
+            # Mismo nombre existe en otras provincias (ej. 25 de Mayo, La Pampa):
+            # exigimos que la ubicación diga "<Ciudad>, Buenos Aires" (no GBA/Capital).
+            ubicacion_ok = any(
+                normalizar(l).startswith(f"{normalizar(loc['nombre'])} buenos aires")
+                and "gba" not in normalizar(l) for l in lineas)
+            if not ubicacion_ok:
+                continue
             empresa = ""
             for l in lineas:
                 if l != titulo and not re.match(r"^\d[,.]\d$", l) and loc["nombre"].lower() not in l.lower() \
@@ -245,7 +252,8 @@ def buscador_web(loc: dict, cfg: dict) -> list[dict]:
 # (Opcional: con los secretos IA_KEY / IA_URL / IA_MODELO se agrega una propia al principio.)
 PROVEEDORES = [
     {"nombre": "LLM7", "url": "https://api.llm7.io/v1/chat/completions",
-     "clave": "unused", "modelo": os.environ.get("LLM7_MODELO") or "gpt-4.1-nano", "pausa": 3},
+     "clave": "unused", "modelo": os.environ.get("LLM7_MODELO") or "", "pausa": 3,
+     "elegir_modelo": "https://api.llm7.io/v1/models"},
     {"nombre": "Pollinations", "url": "https://text.pollinations.ai/openai",
      "clave": None, "modelo": "openai", "pausa": 16},
 ]
@@ -255,6 +263,31 @@ if os.environ.get("IA_KEY"):
                            "clave": os.environ["IA_KEY"],
                            "modelo": os.environ.get("IA_MODELO") or "llama-3.3-70b-versatile", "pausa": 3})
 FALLAS: dict[str, int] = {}
+PREFERIDOS = ["gpt-4.1-mini", "gpt-4o-mini", "gpt-5-mini", "gpt-4.1-nano", "mistral-small", "deepseek-v3",
+              "llama-3.3-70b", "qwen", "gemini", "default"]
+
+
+def elegir_modelo(prov: dict) -> None:
+    """Pide la lista de modelos disponibles y elige uno (los gratuitos cambian seguido)."""
+    url = prov.pop("elegir_modelo")
+    try:
+        datos = requests.get(url, headers={"Authorization": f"Bearer {prov['clave']}"}, timeout=30).json()
+        ids = [m.get("id", "") for m in (datos.get("data", datos) if isinstance(datos, dict) else datos)
+               if isinstance(m, dict)]
+        log(f"  {prov['nombre']}: modelos disponibles: {', '.join(ids[:25])}")
+        if prov["modelo"] in ids:
+            return
+        for pref in PREFERIDOS:
+            hit = next((i for i in ids if pref in i.lower() and "audio" not in i and "vision" not in i), None)
+            if hit:
+                prov["modelo"] = hit
+                break
+        else:
+            prov["modelo"] = prov["modelo"] or (ids[0] if ids else "default")
+        log(f"  {prov['nombre']}: usando {prov['modelo']}")
+    except Exception as e:  # noqa: BLE001
+        prov["modelo"] = prov["modelo"] or "default"
+        log(f"  {prov['nombre']}: no pude listar modelos ({str(e)[:100]})")
 
 
 def pedir_ia(sistema: str, usuario: str) -> tuple[dict, str] | None:
@@ -262,7 +295,9 @@ def pedir_ia(sistema: str, usuario: str) -> tuple[dict, str] | None:
     for prov in PROVEEDORES:
         if FALLAS.get(prov["nombre"], 0) >= 3:
             continue  # falló demasiado en esta corrida: no insistir
-        cuerpo = {"model": prov["modelo"], "temperature": 0.1,
+        if prov.get("elegir_modelo"):
+            elegir_modelo(prov)
+        cuerpo = {"model": prov["modelo"], "temperature": 0.1, "max_tokens": 4000,
                   "messages": [{"role": "system", "content": sistema},
                                {"role": "user", "content": usuario}]}
         headers = {"Content-Type": "application/json"}
@@ -303,6 +338,10 @@ Te paso una lista de avisos o resultados de búsqueda. Para cada uno decidí:
   de La Pampa/San Juan/otra). false si es: una persona que busca trabajo, un curso,
   una nota general sobre desempleo, una oferta 100% remota de todo el país sin relación
   con la zona, publicidad, o algo que no podés confirmar.
+  OJO con los nombres repetidos: "25 de Mayo" debe ser la CIUDAD del partido de 25 de Mayo
+  (provincia de Buenos Aires), NO la Avenida/calle 25 de Mayo de Capital Federal ni de ninguna
+  ciudad, NI 25 de Mayo de La Pampa, San Juan o Misiones, ni el feriado. Lo mismo para
+  "9 de Julio" (no la avenida de Capital), "General Alvear" (no Mendoza), "Lobos" y "Alberti".
 - "puesto": nombre corto del puesto (ej. "Cajero/a", "Peón rural", "Enfermero/a").
 - "empresa": empresa o empleador si se sabe, si no "".
 - "localidad": la ciudad donde es el trabajo, elegida de {{LOCALIDADES}} (normalmente la ciudad buscada).
@@ -332,6 +371,22 @@ def clasificar_lote(lote: list[dict]) -> dict[int, dict] | None:
 
 
 USO_IA: dict[str, int] = {}
+
+
+# ---------------------------------------------------------------- verificación de zona
+
+
+def zona_ok(texto: str, loc: dict) -> bool | None:
+    """True = seguro que es la ciudad de la zona; False = es otro lugar
+    (una avenida de Capital, otra provincia, el feriado...); None = no se sabe."""
+    t = normalizar(texto)
+    if any(re.search(n, t) for n in loc.get("negativas") or []):
+        return False
+    if not loc.get("ambiguo"):
+        return True if any(normalizar(a) in t for a in loc["alias"] + [loc["nombre"]]) else None
+    if any(re.search(pz, t) for pz in loc.get("positivas") or []):
+        return True
+    return None
 
 
 # ---------------------------------------------------------------- filtro por reglas
@@ -379,8 +434,8 @@ def clasificar_por_reglas(a: dict, alias_de: dict[str, list[str]]) -> dict:
     if a["fuente"] == "Computrabajo":
         es_oferta = True
     else:
-        menciona = any(normalizar(x) in texto for x in alias_de[a["localidad"]])
-        es_oferta = menciona and bool(PALABRAS_OFERTA.search(texto)) and not EXCLUIR.search(texto)
+        es_oferta = (a.get("zona") is True and bool(PALABRAS_OFERTA.search(texto))
+                     and not EXCLUIR.search(texto))
     resumen = ""
     if a["fuente"] != "Computrabajo":
         resumen = re.sub(r"\s+", " ", a.get("texto", "")).strip()
@@ -427,21 +482,38 @@ def main() -> int:
                 log(f"{nombre:16} {loc['nombre']:16} ERROR {str(e)[:150]}")
             time.sleep(1)
 
+    urls_actuales = {a["url"] for a in crudos}
+    ciudades_ct_ok = {a["localidad"] for a in crudos if a["fuente"] == "Computrabajo"}
+
     # 2. Quedarse con lo nuevo (por URL)
     nuevos: dict[str, dict] = {}
     for a in crudos:
         a["id"] = id_de(a["url"])
         if a["id"] not in ya_vistos and a["id"] not in nuevos:
             nuevos[a["id"]] = a
-    pendientes = list(nuevos.values())
+    loc_por_nombre = {l["nombre"]: l for l in cfg["localidades"]}
+    pendientes = []
+    fuera_de_zona = 0
+    for a in nuevos.values():
+        if a["fuente"] == "Computrabajo":
+            a["zona"] = True  # ya verificado por la ubicación del portal
+        else:
+            a["zona"] = zona_ok(f"{a['titulo']} {a.get('texto', '')}", loc_por_nombre[a["localidad"]])
+        # Ciudad con nombre ambiguo sin confirmar, o claramente otro lugar: afuera
+        if a["zona"] is False or (a["zona"] is None and loc_por_nombre[a["localidad"]].get("ambiguo")):
+            descartados.append(a["id"])
+            fuera_de_zona += 1
+            continue
+        pendientes.append(a)
+    log(f"{fuera_de_zona} descartados por no ser de la zona (calles, otras provincias, etc.)")
     log(f"\n{len(crudos)} resultados en total, {len(pendientes)} nuevos para revisar")
 
     # 3. Clasificar con IA en lotes
     aceptadas: list[dict] = []
     alias_de = {l["nombre"]: l["alias"] + [l["nombre"]] for l in cfg["localidades"]}
     usar_ia = True
-    for i in range(0, len(pendientes), 20):
-        lote = pendientes[i:i + 20]
+    for i in range(0, len(pendientes), 10):
+        lote = pendientes[i:i + 10]
         res = clasificar_lote(lote) if usar_ia else None
         if res is None:
             log("  ninguna IA respondió: este lote se filtra por reglas")
@@ -474,6 +546,15 @@ def main() -> int:
     for o in sorted(previas + aceptadas, key=lambda o: o["fecha"]):
         if o["fecha"] < limite:
             continue
+        # Computrabajo: si el portal se leyó bien y el aviso ya no figura, se cubrió o venció
+        if (o["fuente"] == "Computrabajo" and o["localidad"] in ciudades_ct_ok
+                and o["url"] not in urls_actuales):
+            continue
+        # Revalidar avisos de diarios/web con las reglas de zona actuales
+        if o["fuente"] in ("Noticias locales", "Web") and o["localidad"] in loc_por_nombre:
+            z = zona_ok(f"{o['puesto']} {o.get('resumen', '')}", loc_por_nombre[o["localidad"]])
+            if z is False or (z is None and loc_por_nombre[o["localidad"]].get("ambiguo")):
+                continue
         clave = clave_duplicado(o)
         if clave in todas:
             existente = todas[clave]

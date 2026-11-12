@@ -1,14 +1,59 @@
 # Configuración del buscador de empleos de la zona.
 # Para sumar o sacar una ciudad, editá la lista "localidades" y guardá:
 # la próxima corrida automática ya la incluye.
+#
+# ambiguo: true  -> el nombre existe en otros lados (calles, otras provincias, feriados).
+#                   Para esas ciudades un aviso de diarios/web/redes solo se acepta si
+#                   coincide alguna "positivas" y ninguna "negativas".
+# negativas      -> si aparece alguna, el aviso se descarta (ej. "Av. 25 de Mayo" de Capital).
 
 localidades:
   - nombre: 25 de Mayo
     slug: 25-de-mayo            # como aparece en las URLs de Computrabajo
     alias: ["25 de mayo", "veinticinco de mayo", "norberto de la riestra", "valdés", "valdes", "del valle", "ernestina", "pedernales", "agustín mosconi", "gobernador ugarte", "san enrique", "martín berraondo"]
+    ambiguo: true
+    positivas:
+      - "25 de mayo (buenos aires|bs as|pba|provincia de buenos aires|prov de buenos aires)"
+      - "partido de 25 de mayo"
+      - "ciudad de 25 de mayo"
+      - "veinticinco de mayo"
+      - "norberto de la riestra"
+      - "valdes"
+      - "ernestina"
+      - "pedernales"
+      - "agustin mosconi"
+      - "gobernador ugarte"
+      - "san enrique"
+      - "martin berraondo"
+    negativas:
+      - "\\b(av|avda|avenida|calle|esquina|esq|sobre) 25 de mayo"
+      - "25 de mayo (al )?\\d{2,5}"
+      - "la pampa"
+      - "san juan"
+      - "misiones"
+      - "neuquen"
+      - "rio negro"
+      - "capital federal"
+      - "caba"
+      - "ciudad autonoma"
+      - "microcentro"
+      - "san nicolas"
+      - "monserrat"
+      - "1810"
+      - "revolucion de mayo"
+      - "feriado"
+      - "fiestas mayas"
+      - "acto del 25"
+      - "semana de mayo"
+      - "subte"
+      - "colectivo"
   - nombre: Saladillo
     slug: saladillo
     alias: ["saladillo", "del carril", "álvarez de toledo", "alvarez de toledo", "cazón", "cazon", "polvaredas"]
+    negativas:
+      - "san luis"
+      - "cordoba"
+      - "tucuman"
   - nombre: Roque Pérez
     slug: roque-perez
     alias: ["roque pérez", "roque perez", "carlos beguerie"]
@@ -18,15 +63,72 @@ localidades:
   - nombre: Alberti
     slug: alberti
     alias: ["alberti", "mechita"]
+    ambiguo: true
+    positivas:
+      - "alberti (buenos aires|bs as|pba|provincia de buenos aires|prov de buenos aires)"
+      - "partido de alberti"
+      - "ciudad de alberti"
+      - "mechita"
+      - "coronel segui"
+      - "plomer"
+    negativas: []
   - nombre: 9 de Julio
     slug: 9-de-julio
     alias: ["9 de julio", "nueve de julio"]
+    ambiguo: true
+    positivas:
+      - "9 de julio (buenos aires|bs as|pba|provincia de buenos aires|prov de buenos aires)"
+      - "partido de 9 de julio"
+      - "ciudad de 9 de julio"
+      - "nueve de julio"
+      - "dudignac"
+    negativas:
+      - "\\b(av|avda|avenida|calle|esquina|esq|sobre) 9 de julio"
+      - "9 de julio (al )?\\d{2,5}"
+      - "obelisco"
+      - "capital federal"
+      - "caba"
+      - "ciudad autonoma"
+      - "microcentro"
+      - "independencia"
+      - "1816"
+      - "feriado"
+      - "tucuman"
+      - "metrobus"
   - nombre: General Alvear
     slug: general-alvear
     alias: ["general alvear", "gral. alvear", "gral alvear"]
+    ambiguo: true
+    positivas:
+      - "general alvear (buenos aires|bs as|pba|provincia de buenos aires|prov de buenos aires)"
+      - "gral alvear (buenos aires|bs as|pba|provincia de buenos aires|prov de buenos aires)"
+      - "partido de general alvear"
+    negativas:
+      - "\\b(av|avda|avenida|calle|esquina|esq|sobre) (general|gral) alvear"
+      - "(general|gral) alvear (al )?\\d{2,5}"
+      - "mendoza"
+      - "san rafael"
+      - "misiones"
+      - "corrientes"
+      - "entre rios"
   - nombre: Lobos
     slug: lobos
     alias: ["lobos"]
+    ambiguo: true
+    positivas:
+      - "lobos (buenos aires|bs as|pba|provincia de buenos aires|prov de buenos aires)"
+      - "partido de lobos"
+      - "ciudad de lobos"
+      - "salvador maria"
+      - "empalme lobos"
+    negativas:
+      - "lobos? marinos?"
+      - "lobos? de mar"
+      - "chubut"
+      - "madryn"
+      - "manada"
+      - "rugby"
+      - "lobos club"
   - nombre: Chivilcoy
     slug: chivilcoy
     alias: ["chivilcoy"]
