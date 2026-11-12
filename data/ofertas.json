@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-12T17:40-03:00",
+ "actualizado": "2026-11-12T17:42-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,11 +34,11 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 126,
+   "encontrados": 124,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 70,
+   "encontrados": 270,
    "errores": 0
   }
  },
@@ -245,18 +245,6 @@
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-tester-as-con-experiencia-en-as-en-25-de-mayo-849362E63FD6F00661373E686DCF3405",
    "fecha": "2026-11-04",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "adb24a9c758b0b6e",
-   "puesto": "Kineciologo",
-   "empresa": "VILLAGRA ANDREA YANINA",
-   "localidad": "9 de Julio",
-   "rubro": "Salud",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-kineciologo-kinesiologo-matriculado-para-atencion-domiciliaria-en-9-de-julio-40A119342C04349061373E686DCF3405",
-   "fecha": "2026-11-02",
    "detectado": "2026-11-12"
   },
   {
