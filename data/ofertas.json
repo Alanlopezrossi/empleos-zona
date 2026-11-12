@@ -1,1 +1,45 @@
-{"actualizado":null,"localidades":[],"rubros":[],"fuentes":{},"ofertas":[]}
+{
+ "actualizado": "2026-11-12T16:32-03:00",
+ "localidades": [
+  "25 de Mayo",
+  "Saladillo",
+  "Roque Pérez",
+  "Bragado",
+  "Alberti",
+  "9 de Julio",
+  "General Alvear",
+  "Lobos",
+  "Chivilcoy"
+ ],
+ "rubros": [
+  "Comercio y ventas",
+  "Administración y oficina",
+  "Agro",
+  "Salud",
+  "Educación",
+  "Gastronomía y hotelería",
+  "Construcción y oficios",
+  "Industria y producción",
+  "Transporte y logística",
+  "Bancos y finanzas",
+  "Tecnología",
+  "Cuidado de personas y limpieza",
+  "Sector público",
+  "Otros"
+ ],
+ "fuentes": {
+  "Computrabajo": {
+   "encontrados": 27,
+   "errores": 0
+  },
+  "Google Noticias": {
+   "encontrados": 127,
+   "errores": 0
+  },
+  "Buscador web": {
+   "encontrados": 61,
+   "errores": 0
+  }
+ },
+ "ofertas": []
+}
