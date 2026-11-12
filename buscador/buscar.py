@@ -118,6 +118,11 @@ def fecha_relativa(texto: str) -> str:
     return (AHORA - timedelta(days=dias)).date().isoformat()
 
 
+ETIQUETAS_PORTAL = re.compile(
+    r"^(se precisa.*|postulado|empleo destacado|destacad[oa]|nuevo|urgente|vista|guardad[oa]|oferta oculta|ocultar|hace .*|ayer|"
+    r"m[aá]s de 30 d[ií]as|\d{1,2} de [a-z]+|importante empresa del sector|empresa confidencial|valorar.*|\(.*\))$", re.I)
+
+
 def computrabajo(loc: dict) -> list[dict]:
     """Avisos publicados en Computrabajo para la ciudad."""
     avisos: dict[str, dict] = {}
@@ -141,9 +146,13 @@ def computrabajo(loc: dict) -> list[dict]:
             lineas = [l.strip() for l in bloque.get_text("\n").split("\n") if l.strip()]
             empresa = ""
             for l in lineas:
-                if l != titulo and not re.match(r"^\d[,.]\d$", l) and loc["nombre"].lower() not in l.lower():
+                if l != titulo and not re.match(r"^\d[,.]\d$", l) and loc["nombre"].lower() not in l.lower() \
+                        and not ETIQUETAS_PORTAL.match(l):
                     empresa = l
                     break
+            link_empresa = bloque.select_one('a[href*="/empresas/"]') if hasattr(bloque, "select_one") else None
+            if link_empresa and link_empresa.get_text(strip=True):
+                empresa = link_empresa.get_text(" ", strip=True)
             fecha_txt = next((l for l in lineas if re.search(r"hace|ayer|de [a-z]+$|30 d", l, re.I)), "")
             avisos[href] = {
                 "fuente": "Computrabajo",
