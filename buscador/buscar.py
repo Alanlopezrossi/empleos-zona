@@ -255,7 +255,7 @@ PROVEEDORES = [
      "clave": "unused", "modelo": os.environ.get("LLM7_MODELO") or "", "pausa": 3,
      "elegir_modelo": "https://api.llm7.io/v1/models"},
     {"nombre": "Pollinations", "url": "https://text.pollinations.ai/openai",
-     "clave": None, "modelo": "openai", "pausa": 16},
+     "clave": None, "modelo": "openai", "pausa": 46},  # anónimo: 1 respuesta cada 45 s
 ]
 if os.environ.get("IA_KEY"):
     PROVEEDORES.insert(0, {"nombre": "IA propia",
@@ -263,8 +263,10 @@ if os.environ.get("IA_KEY"):
                            "clave": os.environ["IA_KEY"],
                            "modelo": os.environ.get("IA_MODELO") or "llama-3.3-70b-versatile", "pausa": 3})
 FALLAS: dict[str, int] = {}
-PREFERIDOS = ["gpt-4.1-mini", "gpt-4o-mini", "gpt-5-mini", "gpt-4.1-nano", "mistral-small", "deepseek-v3",
-              "llama-3.3-70b", "qwen", "gemini", "default"]
+PREFERIDOS = ["gpt-4.1-mini", "gpt-4o-mini", "gpt-5-mini", "gpt-4.1-nano", "mistral-small", "flash",
+              "deepseek", "llama", "qwen", "gemini", "8b", "default"]
+INICIO = time.time()
+MAX_SEGUNDOS_IA = 15 * 60  # después de esto, el resto se filtra por reglas
 
 
 def elegir_modelo(prov: dict) -> None:
@@ -277,13 +279,12 @@ def elegir_modelo(prov: dict) -> None:
         log(f"  {prov['nombre']}: modelos disponibles: {', '.join(ids[:25])}")
         if prov["modelo"] in ids:
             return
+        candidatos = []
         for pref in PREFERIDOS:
-            hit = next((i for i in ids if pref in i.lower() and "audio" not in i and "vision" not in i), None)
-            if hit:
-                prov["modelo"] = hit
-                break
-        else:
-            prov["modelo"] = prov["modelo"] or (ids[0] if ids else "default")
+            candidatos += [i for i in ids if pref in i.lower() and i not in candidatos
+                           and not re.search(r"audio|vision|voxtral|krea|chroma|image", i, re.I)]
+        prov["candidatos"] = candidatos[:4] or ["default"]
+        prov["modelo"] = prov["candidatos"].pop(0)
         log(f"  {prov['nombre']}: usando {prov['modelo']}")
     except Exception as e:  # noqa: BLE001
         prov["modelo"] = prov["modelo"] or "default"
@@ -303,9 +304,25 @@ def pedir_ia(sistema: str, usuario: str) -> tuple[dict, str] | None:
         headers = {"Content-Type": "application/json"}
         if prov["clave"]:
             headers["Authorization"] = f"Bearer {prov['clave']}"
-        for intento in range(2):
+        for intento in range(3):
+            if time.time() - INICIO > MAX_SEGUNDOS_IA:
+                return None
             try:
                 r = requests.post(prov["url"], json=cuerpo, headers=headers, timeout=120)
+                if r.status_code in (401, 403) and prov.get("candidatos"):
+                    log(f"  {prov['nombre']}: {prov['modelo']} no disponible sin clave, pruebo otro")
+                    prov["modelo"] = prov["candidatos"].pop(0)
+                    cuerpo["model"] = prov["modelo"]
+                    continue
+                if r.status_code in (401, 403):
+                    FALLAS[prov["nombre"]] = 99
+                    log(f"  {prov['nombre']}: requiere clave, se deja de usar")
+                    break
+                if r.status_code == 402:  # límite gratuito de Pollinations
+                    m = re.search(r"Retry after (\d+)", r.text)
+                    espera = min(int(m.group(1)) + 2 if m else 46, 60)
+                    time.sleep(espera)
+                    continue
                 if r.status_code == 429:
                     espera = min(int(float(r.headers.get("retry-after", "20"))), 60)
                     log(f"  {prov['nombre']} ocupada, espero {espera}s")
