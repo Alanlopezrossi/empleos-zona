@@ -4,7 +4,8 @@ Buscador de ofertas laborales de la zona.
 Corre solo en GitHub Actions cada pocas horas:
   1. Junta avisos de varias fuentes (Computrabajo, Google Noticias, buscador web).
   2. Filtra para quedarse solo con ofertas reales de la zona y las ordena por
-     rubro: con reglas propias, o con una IA si se configura el secreto IA_KEY.
+     rubro con una IA gratuita (LLM7 / Pollinations, sin registro); si no
+     responde ninguna, con reglas propias.
   3. Guarda todo en data/ofertas.json, que es lo que lee la página.
 
 Cada fuente está aislada: si una falla, las demás siguen funcionando.
@@ -217,6 +218,8 @@ def buscador_web(loc: dict, cfg: dict) -> list[dict]:
     consultas = [
         consulta_texto(loc, cfg),
         f'"{loc["nombre"]}" banco ("búsqueda laboral" OR "ingreso de personal" OR "busca personal")',
+        # Publicaciones públicas de Facebook/Instagram que el buscador tenga indexadas
+        f'(site:facebook.com OR site:instagram.com) "{loc["nombre"]}" ("busca personal" OR "se necesita" OR "se busca" OR "buscamos")',
     ]
     salida = []
     for q in consultas:
@@ -235,12 +238,61 @@ def buscador_web(loc: dict, cfg: dict) -> list[dict]:
     return salida
 
 
-# ---------------------------------------------------------------- IA (GitHub Models)
+# ---------------------------------------------------------------- IA
 
-# IA opcional: cualquier servicio compatible con OpenAI (Groq, Gemini, OpenRouter...).
-# Si no hay clave configurada, se usa el filtro por reglas de más abajo.
-URL_IA = os.environ.get("IA_URL") or "https://api.groq.com/openai/v1/chat/completions"
-MODELO = os.environ.get("IA_MODELO") or "llama-3.3-70b-versatile"
+# Cadena de IAs gratuitas, en orden. Si una falla se prueba la siguiente, y si
+# ninguna responde se usa el filtro por reglas. Ninguna requiere registrarse.
+# (Opcional: con los secretos IA_KEY / IA_URL / IA_MODELO se agrega una propia al principio.)
+PROVEEDORES = [
+    {"nombre": "LLM7", "url": "https://api.llm7.io/v1/chat/completions",
+     "clave": "unused", "modelo": os.environ.get("LLM7_MODELO") or "gpt-4.1-nano", "pausa": 3},
+    {"nombre": "Pollinations", "url": "https://text.pollinations.ai/openai",
+     "clave": None, "modelo": "openai", "pausa": 16},
+]
+if os.environ.get("IA_KEY"):
+    PROVEEDORES.insert(0, {"nombre": "IA propia",
+                           "url": os.environ.get("IA_URL") or "https://api.groq.com/openai/v1/chat/completions",
+                           "clave": os.environ["IA_KEY"],
+                           "modelo": os.environ.get("IA_MODELO") or "llama-3.3-70b-versatile", "pausa": 3})
+FALLAS: dict[str, int] = {}
+
+
+def pedir_ia(sistema: str, usuario: str) -> tuple[dict, str] | None:
+    """Devuelve (json_respuesta, nombre_proveedor) o None si ninguna IA respondió."""
+    for prov in PROVEEDORES:
+        if FALLAS.get(prov["nombre"], 0) >= 3:
+            continue  # falló demasiado en esta corrida: no insistir
+        cuerpo = {"model": prov["modelo"], "temperature": 0.1,
+                  "messages": [{"role": "system", "content": sistema},
+                               {"role": "user", "content": usuario}]}
+        headers = {"Content-Type": "application/json"}
+        if prov["clave"]:
+            headers["Authorization"] = f"Bearer {prov['clave']}"
+        for intento in range(2):
+            try:
+                r = requests.post(prov["url"], json=cuerpo, headers=headers, timeout=120)
+                if r.status_code == 429:
+                    espera = min(int(float(r.headers.get("retry-after", "20"))), 60)
+                    log(f"  {prov['nombre']} ocupada, espero {espera}s")
+                    time.sleep(espera)
+                    continue
+                if r.status_code >= 400:
+                    raise RuntimeError(f"HTTP {r.status_code}: {r.text[:200]!r}")
+                try:
+                    contenido = r.json()["choices"][0]["message"]["content"] or ""
+                except (ValueError, KeyError, IndexError, TypeError):
+                    contenido = r.text  # algunos devuelven texto plano
+                m = re.search(r"\{.*\}", contenido, re.S)
+                if not m:
+                    raise RuntimeError(f"no devolvió JSON: {contenido[:150]!r}")
+                time.sleep(prov["pausa"])
+                return json.loads(m.group(0)), prov["nombre"]
+            except Exception as e:  # noqa: BLE001
+                FALLAS[prov["nombre"]] = FALLAS.get(prov["nombre"], 0) + 1
+                log(f"  {prov['nombre']} error: {str(e)[:200]}")
+                time.sleep(5)
+    return None
+
 
 INSTRUCCIONES = f"""Sos el editor de una bolsa de trabajo de la zona de 25 de Mayo, Saladillo,
 Roque Pérez y alrededores (provincia de Buenos Aires, Argentina).
@@ -264,52 +316,22 @@ LOCALIDADES: list[str] = []
 
 
 def clasificar_lote(lote: list[dict]) -> dict[int, dict] | None:
-    token = os.environ.get("IA_KEY")
-    if not token:
-        return None
     entrada = "\n\n".join(
         f"#{i} | Fuente: {a['fuente']} | Ciudad buscada: {a['localidad']}\n"
         f"Título: {a['titulo']}\nTexto: {a.get('texto', '')[:400]}"
         for i, a in enumerate(lote)
     )
-    cuerpo = {
-        "model": MODELO,
-        "messages": [
-            {"role": "system", "content": INSTRUCCIONES.replace("{LOCALIDADES}", json.dumps(LOCALIDADES, ensure_ascii=False))},
-            {"role": "user", "content": entrada},
-        ],
-        "temperature": 0.1,
-        "response_format": {"type": "json_object"},
-    }
-    for intento in range(3):
-        try:
-            r = requests.post(URL_IA, json=cuerpo, timeout=90, headers={
-                "Authorization": f"Bearer {token}",
-                "Content-Type": "application/json",
-            })
-            if r.status_code == 429:
-                espera = int(r.headers.get("retry-after", "30"))
-                if espera > 120:
-                    log(f"  límite diario de la IA alcanzado; se sigue en la próxima corrida")
-                    return None
-                log(f"  IA ocupada, espero {espera}s")
-                time.sleep(espera)
-                continue
-            if r.status_code >= 400 or not r.text.strip():
-                raise RuntimeError(f"HTTP {r.status_code}: {r.text[:300]!r}")
-            try:
-                contenido = r.json()["choices"][0]["message"]["content"] or ""
-            except (ValueError, KeyError, IndexError) as e:
-                raise RuntimeError(f"respuesta inesperada HTTP {r.status_code}: {r.text[:300]!r}") from e
-            m = re.search(r"\{.*\}", contenido, re.S)
-            if not m:
-                raise RuntimeError(f"la IA no devolvió JSON: {contenido[:200]!r}")
-            datos = json.loads(m.group(0))
-            return {int(x["n"]): x for x in datos.get("resultados", []) if "n" in x}
-        except Exception as e:  # noqa: BLE001
-            log(f"  error IA (intento {intento + 1}): {str(e)[:200]}")
-            time.sleep(10)
-    return None
+    sistema = INSTRUCCIONES.replace("{LOCALIDADES}", json.dumps(LOCALIDADES, ensure_ascii=False))
+    res = pedir_ia(sistema, entrada)
+    if res is None:
+        return None
+    datos, prov = res
+    resultados = {int(x["n"]): x for x in datos.get("resultados", []) if isinstance(x, dict) and "n" in x}
+    USO_IA[prov] = USO_IA.get(prov, 0) + len(resultados)
+    return resultados
+
+
+USO_IA: dict[str, int] = {}
 
 
 # ---------------------------------------------------------------- filtro por reglas
@@ -417,14 +439,12 @@ def main() -> int:
     # 3. Clasificar con IA en lotes
     aceptadas: list[dict] = []
     alias_de = {l["nombre"]: l["alias"] + [l["nombre"]] for l in cfg["localidades"]}
-    usar_ia = bool(os.environ.get("IA_KEY"))
-    log("Filtro: " + ("IA (" + MODELO + ")" if usar_ia else "reglas (sin IA configurada)"))
+    usar_ia = True
     for i in range(0, len(pendientes), 20):
         lote = pendientes[i:i + 20]
         res = clasificar_lote(lote) if usar_ia else None
         if res is None:
-            if usar_ia:
-                log("  IA no respondió: este lote se filtra por reglas")
+            log("  ninguna IA respondió: este lote se filtra por reglas")
             res = {n: clasificar_por_reglas(a, alias_de) for n, a in enumerate(lote)}
         for n, a in enumerate(lote):
             r = res.get(n)
@@ -445,8 +465,7 @@ def main() -> int:
                 "fecha": a["fecha"],
                 "detectado": AHORA.date().isoformat(),
             })
-        if usar_ia:
-            time.sleep(4)
+    log(f"Clasificados por IA: {USO_IA or 'ninguno'}")
     log(f"{len(aceptadas)} ofertas nuevas aceptadas")
 
     # 4. Unir, quitar duplicados y vencidas

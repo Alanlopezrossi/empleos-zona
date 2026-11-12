@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Cargar aviso · Empleos en la zona</title>
+<style>
+  :root { --bg:#f6f4ef; --card:#fffdf9; --ink:#1d2320; --muted:#66706b; --line:#e3ded3; --accent:#1f6f50; --soft:#e2efe8; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
+  header { background:var(--accent); color:#fff; padding:24px 20px; }
+  header h1 { margin:0; font-size:1.4rem; }
+  header a { color:#fff; opacity:.85; font-size:.9rem; }
+  main { max-width:720px; margin:0 auto; padding:20px; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:16px; }
+  h2 { font-size:1.1rem; margin:0 0 8px; }
+  p, li { color:#3b4440; font-size:.95rem; }
+  label { display:block; font-weight:600; font-size:.9rem; margin:12px 0 4px; }
+  textarea, input { width:100%; font:inherit; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+  textarea { min-height:160px; resize:vertical; }
+  button { margin-top:14px; font:inherit; font-weight:600; background:var(--accent); color:#fff; border:0; border-radius:10px; padding:11px 18px; cursor:pointer; }
+  .boton { display:inline-block; background:var(--soft); color:var(--accent); border:2px dashed var(--accent); border-radius:10px;
+           padding:10px 16px; font-weight:700; text-decoration:none; cursor:grab; }
+  ol { padding-left:20px; }
+  .nota { font-size:.85rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cargar un aviso a la página</h1>
+  <a href="./">← Volver a las ofertas</a>
+</header>
+<main>
+
+<section>
+  <h2>Opción 1 · Pegar el aviso (sirve en el celular)</h2>
+  <p>Copiá el texto del aviso (de Facebook, Instagram, WhatsApp, un cartel…) y pegalo acá.</p>
+  <label for="texto">Texto del aviso</label>
+  <textarea id="texto" placeholder="Ej: Se busca cajera para supermercado en Saladillo. Enviar CV por WhatsApp al 2344…"></textarea>
+  <label for="link">Link a la publicación (opcional)</label>
+  <input id="link" type="url" placeholder="https://www.facebook.com/…">
+  <button id="enviar">Enviar</button>
+  <p class="nota">Se abre GitHub con el aviso cargado: tocá <b>Create</b> (o "Submit new issue") y en un par de minutos aparece en la página, ordenado por la IA.</p>
+</section>
+
+<section>
+  <h2>Opción 2 · Botón para la computadora (1 clic desde Facebook)</h2>
+  <ol>
+    <li>Mostrá la barra de favoritos del navegador (<b>Ctrl+Shift+B</b>).</li>
+    <li>Arrastrá este botón hasta la barra: <a class="boton" id="bookmarklet" href="#">➕ Mandar a Empleos</a></li>
+    <li>Cuando veas un aviso en un grupo: <b>seleccioná el texto</b> del posteo con el mouse y tocá el botón.</li>
+    <li>Se abre GitHub con todo cargado: tocá <b>Create</b>.</li>
+  </ol>
+  <p class="nota">Para que el link lleve al posteo exacto, abrilo primero (clic en la fecha del posteo) y después usá el botón. Si no, se guarda el link del grupo.</p>
+</section>
+
+</main>
+<script>
+const REPO = "https://github.com/Alanlopezrossi/empleos-zona/issues/new";
+function abrir(texto, link) {
+  const cuerpo = (link ? "Link: " + link + "\n\n" : "") + texto;
+  window.open(REPO + "?labels=aviso&title=" + encodeURIComponent("Aviso") +
+              "&body=" + encodeURIComponent(cuerpo.slice(0, 6000)), "_blank");
+}
+document.getElementById("enviar").addEventListener("click", () => {
+  const t = document.getElementById("texto").value.trim();
+  if (!t) { document.getElementById("texto").focus(); return; }
+  abrir(t, document.getElementById("link").value.trim());
+});
+const p = new URLSearchParams(location.search);
+if (p.get("texto")) document.getElementById("texto").value = p.get("texto");
+if (p.get("link")) document.getElementById("link").value = p.get("link");
+
+// Bookmarklet: toma el texto seleccionado y el link de la página actual
+const codigo = `(()=>{const s=String(getSelection()).trim();if(!s){alert('Seleccioná primero el texto del aviso con el mouse');return;}` +
+  `const b='Link: '+location.href+'\\n\\n'+s;` +
+  `window.open('${REPO}?labels=aviso&title=Aviso&body='+encodeURIComponent(b.slice(0,6000)),'_blank');})()`;
+document.getElementById("bookmarklet").href = "javascript:" + codigo;
+document.getElementById("bookmarklet").addEventListener("click", e => {
+  e.preventDefault();
+  alert("Arrastralo a la barra de favoritos; no hay que hacerle clic acá.");
+});
+</script>
+</body>
+</html>
