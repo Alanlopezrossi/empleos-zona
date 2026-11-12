@@ -490,7 +490,7 @@ def cargar(path: Path, defecto):
 
 
 def clave_duplicado(o: dict) -> str:
-    return normalizar(f"{o['puesto']} {o['empresa']} {o['localidad']}")
+    return normalizar(f"{o['puesto']} {o['localidad']}")
 
 
 def main() -> int:
