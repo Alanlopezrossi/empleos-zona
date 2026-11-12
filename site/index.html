@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empleos en la zona · 25 de Mayo, Saladillo, Roque Pérez y alrededores</title>
+<meta name="description" content="Todas las ofertas laborales de 25 de Mayo, Saladillo, Roque Pérez, Bragado, Alberti y alrededores, en un solo lugar y actualizadas automáticamente.">
+<style>
+  :root {
+    --bg: #f6f4ef; --card: #fffdf9; --ink: #1d2320; --muted: #66706b; --line: #e3ded3;
+    --accent: #1f6f50; --accent-soft: #e2efe8; --new: #c2571a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: var(--bg); color: var(--ink); line-height: 1.45; }
+  header { background: var(--accent); color: #fff; padding: 28px 20px 22px; }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  h1 { margin: 0 0 6px; font-size: 1.65rem; letter-spacing: -.01em; }
+  header p { margin: 0; opacity: .88; font-size: .95rem; }
+  .filtros { position: sticky; top: 0; z-index: 5; background: var(--bg);
+             border-bottom: 1px solid var(--line); padding: 12px 20px; }
+  .filtros .wrap { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+  .filtros input { grid-column: 1 / -1; }
+  input, select { width: 100%; font: inherit; padding: 10px 12px; border: 1px solid var(--line);
+                  border-radius: 10px; background: #fff; color: var(--ink); }
+  @media (min-width: 680px) {
+    .filtros .wrap { grid-template-columns: 2fr 1fr 1fr; }
+    .filtros input { grid-column: auto; }
+  }
+  main { padding: 16px 20px 40px; }
+  .estado { color: var(--muted); font-size: .88rem; margin: 4px 0 14px; }
+  .oferta { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+            padding: 14px 16px; margin-bottom: 10px; display: block; color: inherit;
+            text-decoration: none; transition: border-color .15s, transform .15s; }
+  .oferta:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+  .puesto { font-weight: 650; font-size: 1.05rem; }
+  .fecha { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+  .nuevo { color: var(--new); font-weight: 600; }
+  .meta { color: var(--muted); font-size: .9rem; margin-top: 2px; }
+  .resumen { margin: 8px 0 10px; font-size: .94rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: .76rem; padding: 3px 9px; border-radius: 99px; background: var(--accent-soft);
+         color: var(--accent); }
+  .tag.fuente { background: #eee9df; color: var(--muted); }
+  .vacio { text-align: center; color: var(--muted); padding: 40px 10px; }
+  footer { color: var(--muted); font-size: .82rem; text-align: center; padding: 0 20px 30px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Empleos en la zona</h1>
+    <p>Ofertas laborales de 25 de Mayo, Saladillo, Roque Pérez y alrededores, juntadas automáticamente de portales, diarios locales y la web.</p>
+  </div>
+</header>
+
+<div class="filtros">
+  <div class="wrap">
+    <input id="q" type="search" placeholder="Buscar puesto, empresa…" aria-label="Buscar">
+    <select id="loc" aria-label="Ciudad"><option value="">Todas las ciudades</option></select>
+    <select id="rubro" aria-label="Rubro"><option value="">Todos los rubros</option></select>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="estado" id="estado">Cargando ofertas…</div>
+  <div id="lista"></div>
+</main>
+
+<footer>
+  Cada aviso enlaza a su publicación original: revisá ahí los requisitos y cómo postularte.<br>
+  Los avisos se archivan solos a los 30 días.
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+let datos = { ofertas: [] };
+
+const hoy = new Date(); hoy.setHours(0,0,0,0);
+function cuando(iso) {
+  const d = new Date(iso + "T00:00:00");
+  const dias = Math.round((hoy - d) / 864e5);
+  if (dias <= 0) return "Hoy";
+  if (dias === 1) return "Ayer";
+  if (dias < 7) return `Hace ${dias} días`;
+  return d.toLocaleDateString("es-AR", { day: "numeric", month: "short" });
+}
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const norm = s => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+function pintar() {
+  const q = norm($("#q").value), loc = $("#loc").value, rubro = $("#rubro").value;
+  const lista = datos.ofertas.filter(o =>
+    (!loc || o.localidad === loc) && (!rubro || o.rubro === rubro) &&
+    (!q || norm(`${o.puesto} ${o.empresa} ${o.resumen}`).includes(q)));
+
+  $("#lista").innerHTML = lista.length ? lista.map(o => {
+    const reciente = (hoy - new Date(o.detectado + "T00:00:00")) / 864e5 < 2;
+    return `<a class="oferta" href="${esc(o.url)}" target="_blank" rel="noopener">
+      <div class="top"><span class="puesto">${esc(o.puesto)}</span>
+        <span class="fecha">${reciente ? '<span class="nuevo">Nuevo · </span>' : ""}${cuando(o.fecha)}</span></div>
+      <div class="meta">${esc([o.empresa, o.localidad].filter(Boolean).join(" · "))}</div>
+      ${o.resumen ? `<p class="resumen">${esc(o.resumen)}</p>` : ""}
+      <div class="tags"><span class="tag">${esc(o.rubro)}</span><span class="tag fuente">${esc(o.fuente)}</span></div>
+    </a>`;
+  }).join("") : `<div class="vacio">No hay ofertas con esos filtros por ahora.</div>`;
+
+  const act = datos.actualizado ? new Date(datos.actualizado).toLocaleString("es-AR",
+    { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "—";
+  $("#estado").textContent = `${lista.length} ofertas · actualizado ${act}`;
+
+  const p = new URLSearchParams();
+  if (loc) p.set("ciudad", loc); if (rubro) p.set("rubro", rubro); if ($("#q").value) p.set("q", $("#q").value);
+  history.replaceState(null, "", p.toString() ? "?" + p : location.pathname);
+}
+
+fetch("ofertas.json", { cache: "no-store" }).then(r => r.json()).then(d => {
+  datos = d;
+  const usadas = new Set(d.ofertas.map(o => o.localidad));
+  for (const l of d.localidades.filter(l => usadas.has(l)))
+    $("#loc").insertAdjacentHTML("beforeend", `<option>${esc(l)}</option>`);
+  const rubros = new Set(d.ofertas.map(o => o.rubro));
+  for (const r of d.rubros.filter(r => rubros.has(r)))
+    $("#rubro").insertAdjacentHTML("beforeend", `<option>${esc(r)}</option>`);
+  const p = new URLSearchParams(location.search);
+  $("#loc").value = p.get("ciudad") || ""; $("#rubro").value = p.get("rubro") || ""; $("#q").value = p.get("q") || "";
+  pintar();
+}).catch(() => { $("#estado").textContent = "No se pudieron cargar las ofertas. Probá de nuevo en un rato."; });
+
+for (const id of ["#q", "#loc", "#rubro"]) $(id).addEventListener("input", pintar);
+</script>
+</body>
+</html>

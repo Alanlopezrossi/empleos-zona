@@ -1,0 +1,43 @@
+# Configuración del buscador de empleos de la zona.
+# Para sumar o sacar una ciudad, editá la lista "localidades" y guardá:
+# la próxima corrida automática ya la incluye.
+
+localidades:
+  - nombre: 25 de Mayo
+    slug: 25-de-mayo            # como aparece en las URLs de Computrabajo
+    alias: ["25 de mayo", "veinticinco de mayo", "norberto de la riestra", "valdés", "valdes", "del valle", "ernestina", "pedernales", "agustín mosconi", "gobernador ugarte", "san enrique", "martín berraondo"]
+  - nombre: Saladillo
+    slug: saladillo
+    alias: ["saladillo", "del carril", "álvarez de toledo", "alvarez de toledo", "cazón", "cazon", "polvaredas"]
+  - nombre: Roque Pérez
+    slug: roque-perez
+    alias: ["roque pérez", "roque perez", "carlos beguerie"]
+  - nombre: Bragado
+    slug: bragado
+    alias: ["bragado", "mechita", "comodoro py"]
+  - nombre: Alberti
+    slug: alberti
+    alias: ["alberti", "mechita"]
+  - nombre: 9 de Julio
+    slug: 9-de-julio
+    alias: ["9 de julio", "nueve de julio"]
+  - nombre: General Alvear
+    slug: general-alvear
+    alias: ["general alvear", "gral. alvear", "gral alvear"]
+  - nombre: Lobos
+    slug: lobos
+    alias: ["lobos"]
+  - nombre: Chivilcoy
+    slug: chivilcoy
+    alias: ["chivilcoy"]
+
+# Palabras que se combinan con cada ciudad en las búsquedas de noticias y web
+palabras_busqueda:
+  - "busca personal"
+  - "se necesita"
+  - "búsqueda laboral"
+  - "convocatoria"
+  - "oferta laboral"
+
+# Cuántos días se muestra un aviso antes de archivarlo
+dias_vigencia: 30
