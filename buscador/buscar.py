@@ -3,8 +3,8 @@ Buscador de ofertas laborales de la zona.
 
 Corre solo en GitHub Actions cada pocas horas:
   1. Junta avisos de varias fuentes (Computrabajo, Google Noticias, buscador web).
-  2. Usa la IA de GitHub (GitHub Models) para quedarse solo con ofertas reales
-     de la zona y ordenarlas por rubro.
+  2. Filtra para quedarse solo con ofertas reales de la zona y las ordena por
+     rubro: con reglas propias, o con una IA si se configura el secreto IA_KEY.
   3. Guarda todo en data/ofertas.json, que es lo que lee la página.
 
 Cada fuente está aislada: si una falla, las demás siguen funcionando.
@@ -227,8 +227,10 @@ def buscador_web(loc: dict, cfg: dict) -> list[dict]:
 
 # ---------------------------------------------------------------- IA (GitHub Models)
 
-MODELO = os.environ.get("MODELO_IA", "openai/gpt-4.1-mini")
-URL_IA = "https://models.github.ai/inference/chat/completions"
+# IA opcional: cualquier servicio compatible con OpenAI (Groq, Gemini, OpenRouter...).
+# Si no hay clave configurada, se usa el filtro por reglas de más abajo.
+URL_IA = os.environ.get("IA_URL") or "https://api.groq.com/openai/v1/chat/completions"
+MODELO = os.environ.get("IA_MODELO") or "llama-3.3-70b-versatile"
 
 INSTRUCCIONES = f"""Sos el editor de una bolsa de trabajo de la zona de 25 de Mayo, Saladillo,
 Roque Pérez y alrededores (provincia de Buenos Aires, Argentina).
@@ -252,9 +254,8 @@ LOCALIDADES: list[str] = []
 
 
 def clasificar_lote(lote: list[dict]) -> dict[int, dict] | None:
-    token = os.environ.get("GITHUB_TOKEN")
+    token = os.environ.get("IA_KEY")
     if not token:
-        log("  (sin GITHUB_TOKEN: se salta la IA)")
         return None
     entrada = "\n\n".join(
         f"#{i} | Fuente: {a['fuente']} | Ciudad buscada: {a['localidad']}\n"
@@ -274,7 +275,6 @@ def clasificar_lote(lote: list[dict]) -> dict[int, dict] | None:
         try:
             r = requests.post(URL_IA, json=cuerpo, timeout=90, headers={
                 "Authorization": f"Bearer {token}",
-                "Accept": "application/vnd.github+json",
                 "Content-Type": "application/json",
             })
             if r.status_code == 429:
@@ -300,6 +300,59 @@ def clasificar_lote(lote: list[dict]) -> dict[int, dict] | None:
             log(f"  error IA (intento {intento + 1}): {str(e)[:200]}")
             time.sleep(10)
     return None
+
+
+# ---------------------------------------------------------------- filtro por reglas
+
+PALABRAS_OFERTA = re.compile(
+    r"busca(n|mos)? (personal|emplead|cajer|vendedor|mozo|chofer|peon|operari|administrativ|enfermer|docente|profesional|tecnic|ayudante|repartidor|encargad|recepcionista)"
+    r"|se (necesita|busca|requiere|solicita)|busqueda laboral|oferta laboral|oferta de empleo|vacante"
+    r"|convocatoria (laboral|para cubrir|a inscripcion)|ingreso de personal|incorpora|seleccion de personal|trabaja con nosotros"
+    r"|empleos? en |puestos? de trabajo")
+EXCLUIR = re.compile(
+    r"\bbusco (trabajo|empleo)|me ofrezco|curso|capacitaci|taller de|desemple|despid|paro |huelga|cierre de"
+    r"|tasa de|indec|estadistic|jubilad|subsidio|beca para estudiantes|perdid|extravi|robo|policial")
+RUBROS_CLAVE = [
+    ("Bancos y finanzas", r"banco|bancari|financier|seguros|contable|contador"),
+    ("Salud", r"enfermer|medic|salud|hospital|clinica|farmac|kinesi|odontolog|psicolog"),
+    ("Educación", r"docente|maestr|profesor|escuela|educaci|jardin"),
+    ("Agro", r"agro|rural|campo|tambo|cosecha|ganader|agronom|tractor|feedlot|semilla|acopio"),
+    ("Gastronomía y hotelería", r"mozo|moza|cociner|gastronom|restaurant|\\bbar\\b|parrill|panader|hotel|bacher"),
+    ("Transporte y logística", r"chofer|camion|logistic|repart|deposito|transport|delivery"),
+    ("Construcción y oficios", r"albanil|construcc|electricist|plomer|soldador|mecanic|carpinter|herrer|pintor|gasista|oficial"),
+    ("Industria y producción", r"operari|produccion|fabrica|planta|industri|laboratorio|frigorif|elaborador"),
+    ("Tecnología", r"programador|desarroll|sistemas|informatic|software|soporte tecnico|\\bit\\b"),
+    ("Cuidado de personas y limpieza", r"cuidador|ninera|limpieza|domestic|acompanante terapeut|geriatr"),
+    ("Sector público", r"municipal|municipio|concurso|provincia de buenos aires|ministerio|intendencia"),
+    ("Administración y oficina", r"administrativ|recepcion|secretari|oficina|rrhh|recursos humanos|data entry"),
+    ("Comercio y ventas", r"vendedor|ventas|comercial|cajer|repositor|atencion al cliente|preventista|supermercado|tienda|local"),
+]
+
+
+def rubro_por_reglas(texto: str) -> str:
+    t = normalizar(texto)
+    for rubro, patron in RUBROS_CLAVE:
+        if re.search(patron, t):
+            return rubro
+    return "Otros"
+
+
+def clasificar_por_reglas(a: dict, alias_de: dict[str, list[str]]) -> dict:
+    """Decide sin IA. Computrabajo ya viene filtrado por ciudad; el resto
+    tiene que mencionar la ciudad y tener palabras de oferta laboral."""
+    titulo = re.sub(r"\s+-\s+[^-]{2,60}$", "", a["titulo"]).strip()  # saca " - Nombre del diario"
+    texto = normalizar(f"{a['titulo']} {a.get('texto', '')}")
+    if a["fuente"] == "Computrabajo":
+        es_oferta = True
+    else:
+        menciona = any(normalizar(x) in texto for x in alias_de[a["localidad"]])
+        es_oferta = menciona and bool(PALABRAS_OFERTA.search(texto)) and not EXCLUIR.search(texto)
+    resumen = ""
+    if a["fuente"] != "Computrabajo":
+        resumen = re.sub(r"\s+", " ", a.get("texto", "")).strip()
+        resumen = resumen[:160].rsplit(" ", 1)[0] + "…" if len(resumen) > 160 else resumen
+    return {"es_oferta": es_oferta, "puesto": titulo, "empresa": "", "localidad": a["localidad"],
+            "rubro": rubro_por_reglas(f"{titulo} {a.get('texto', '')}"), "resumen": resumen}
 
 
 # ---------------------------------------------------------------- guardado
@@ -351,12 +404,16 @@ def main() -> int:
 
     # 3. Clasificar con IA en lotes
     aceptadas: list[dict] = []
+    alias_de = {l["nombre"]: l["alias"] + [l["nombre"]] for l in cfg["localidades"]}
+    usar_ia = bool(os.environ.get("IA_KEY"))
+    log("Filtro: " + ("IA (" + MODELO + ")" if usar_ia else "reglas (sin IA configurada)"))
     for i in range(0, len(pendientes), 20):
         lote = pendientes[i:i + 20]
-        res = clasificar_lote(lote)
+        res = clasificar_lote(lote) if usar_ia else None
         if res is None:
-            log("  IA no disponible: los avisos restantes se revisan en la próxima corrida")
-            break
+            if usar_ia:
+                log("  IA no respondió: este lote se filtra por reglas")
+            res = {n: clasificar_por_reglas(a, alias_de) for n, a in enumerate(lote)}
         for n, a in enumerate(lote):
             r = res.get(n)
             if not r:
@@ -376,7 +433,8 @@ def main() -> int:
                 "fecha": a["fecha"],
                 "detectado": AHORA.date().isoformat(),
             })
-        time.sleep(4)
+        if usar_ia:
+            time.sleep(4)
     log(f"{len(aceptadas)} ofertas nuevas aceptadas")
 
     # 4. Unir, quitar duplicados y vencidas

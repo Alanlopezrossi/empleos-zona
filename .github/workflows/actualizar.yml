@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: write   # guardar data/ofertas.json
-  models: read      # usar la IA de GitHub
   pages: write
   id-token: write
 
@@ -35,14 +34,11 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Probar IA
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python buscador/probar_ia.py
-
       - name: Buscar y clasificar ofertas
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          IA_KEY: ${{ secrets.IA_KEY }}        # opcional: clave de una IA para filtrar mejor
+          IA_URL: ${{ vars.IA_URL }}
+          IA_MODELO: ${{ vars.IA_MODELO }}
         run: python buscador/buscar.py
 
       - name: Guardar datos
