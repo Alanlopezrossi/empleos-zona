@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-12T16:42-03:00",
+ "actualizado": "2026-11-12T16:46-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -37,9 +37,265 @@
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 180,
+   "encontrados": 137,
    "errores": 0
   }
  },
- "ofertas": []
+ "ofertas": [
+  {
+   "id": "daa0abfad40c53db",
+   "puesto": "Administrativo/a de Atención al Cliente y Postventa",
+   "empresa": "Empleo destacado",
+   "localidad": "25 de Mayo",
+   "rubro": "Administración y oficina",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-administrativoa-de-atencion-al-cliente-y-postventa-en-25-de-mayo-4353F881F6B9935E61373E686DCF3405",
+   "fecha": "2026-11-12",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "611ad31bb1057c06",
+   "puesto": "Ejecutivo de Ventas",
+   "empresa": "Postulado",
+   "localidad": "Saladillo",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ejecutivo-de-ventas-planes-de-salud-en-saladillo-00438E1D8D441FC861373E686DCF3405",
+   "fecha": "2026-11-12",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "7c994a3eab6a3ab9",
+   "puesto": "Operarios de mantenimiento",
+   "empresa": "Postulado",
+   "localidad": "Lobos",
+   "rubro": "Industria y producción",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-operarios-de-mantenimiento-tecnicos-en-lobos-A5801369DB08EB8261373E686DCF3405",
+   "fecha": "2026-11-12",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "29c9103a89656b0d",
+   "puesto": "Ingeniero de mantenimiento",
+   "empresa": "Postulado",
+   "localidad": "Chivilcoy",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ingeniero-de-mantenimiento-en-chivilcoy-4F6D007C5329778261373E686DCF3405",
+   "fecha": "2026-11-12",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "af4af65caf77bbbf",
+   "puesto": "Vendedoras Comerciales Independientes. Bragado",
+   "empresa": "Postulado",
+   "localidad": "Bragado",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-vendedoras-comerciales-independientes-bragado-en-bragado-35A0EAE70BC7FDDA61373E686DCF3405",
+   "fecha": "2026-11-11",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "4b895ae8fe473fa6",
+   "puesto": "Asistente de Servicios Payway para Comercios, con residencia en Saladillo.",
+   "empresa": "Postulado",
+   "localidad": "Saladillo",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asistente-de-servicios-payway-para-comercios-con-residencia-en-saladillo-en-saladillo-077B0634B3E61C6261373E686DCF3405",
+   "fecha": "2026-11-10",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "434f25efe9b0e1fd",
+   "puesto": "Búsqueda laboral: Encargado de Campo en la región, la convocatoria incluye a postulantes d",
+   "empresa": "",
+   "localidad": "Bragado",
+   "rubro": "Agro",
+   "resumen": "Búsqueda laboral: Encargado de Campo en la región, la convocatoria incluye a postulantes de Junín, 9 de Julio, Bragado y Los Toldos Junín 24",
+   "fuente": "Noticias locales",
+   "url": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxNQ1ZpU3paczA4QlNwaXU4bXBxZGNEVFZyTHRaRGV4ajIwRXlfYVRwYkh0d2JXUnVmOWpoeEJkenpoVmZPNEprM2lBS3JCOEVzM3JaSWFUWkFyYWl0Vm50SmhPTDJqLU5wcjl3aW5Cend0N2FwZlhBdU10bVBpMzFJaXRzbUtSYmlfT3VFangzNEpqdEpWb0V1WnpGNjZqc1JDdURpV2tWREVRODc4QXhtX0xXbWk5aXNFQm96bnluLXFSaTktM3I5QlBJcTUtbW5uRlpLTVhBRGRXZjBOdXYxc2RQV3pZSEEzQ3N4MjJtTFI?oc=5",
+   "fecha": "2026-11-10",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "52efbde0b2d74238",
+   "puesto": "Sales Development Representative",
+   "empresa": "Postulado",
+   "localidad": "25 de Mayo",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-sales-development-representative-sdr-remote-en-25-de-mayo-9CAA276D11F740BB61373E686DCF3405",
+   "fecha": "2026-11-09",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "8496b2b3211d1a71",
+   "puesto": "Asesor/a de Ventas  Todomoda , Isadora",
+   "empresa": "Se precisa Urgente",
+   "localidad": "Chivilcoy",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asesora-de-ventas-todomoda-isadora-chivilcoy-en-chivilcoy-D8AF52447F56636361373E686DCF3405",
+   "fecha": "2026-11-09",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "ad9075693b92c5dd",
+   "puesto": "Representante comercial — Reuniones y seguimiento",
+   "empresa": "Postulado",
+   "localidad": "25 de Mayo",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-representante-comercial-reuniones-y-seguimiento-remoto-en-25-de-mayo-B13975F7D15C528561373E686DCF3405",
+   "fecha": "2026-11-08",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "e603a0689e159857",
+   "puesto": "Técnico de Radades y VLR",
+   "empresa": "Se precisa Urgente",
+   "localidad": "Bragado",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-radades-y-vlr-region-noroeste-de-buenos-aires-en-bragado-DBA1ACDFB5CE7E1E61373E686DCF3405",
+   "fecha": "2026-11-08",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "73146c06e2fd2a00",
+   "puesto": "Vigilador General",
+   "empresa": "Postulado",
+   "localidad": "Chivilcoy",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-vigilador-general-en-chivilcoy-768C011DB65F1E5961373E686DCF3405",
+   "fecha": "2026-11-08",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "0a2e66699f8838b5",
+   "puesto": "Empleado Polivalente, Ecommerce picking",
+   "empresa": "Se precisa Urgente",
+   "localidad": "Chivilcoy",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-empleado-polivalente-ecommerce-picking-chivilcoy-en-chivilcoy-A3DEBF0C633ABB0061373E686DCF3405",
+   "fecha": "2026-11-07",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "8445ace994fe6fd2",
+   "puesto": "Técnico de Mantenimiento de Equipos Industriales / mov de suelos y mov materiales",
+   "empresa": "Postulado",
+   "localidad": "Bragado",
+   "rubro": "Industria y producción",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-mantenimiento-de-equipos-industriales-mov-de-suelos-y-mov-materiales-zona-bragado-en-bragado-A968D1DB037EDB4C61373E686DCF3405",
+   "fecha": "2026-11-06",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "5220935a1ce84693",
+   "puesto": "Asistente de Servicios Payway para Comercios, con residencia en 9 de Julio .",
+   "empresa": "Postulado",
+   "localidad": "9 de Julio",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-asistente-de-servicios-payway-para-comercios-con-residencia-en-9-de-julio--en-9-de-julio-B204C331DA17538761373E686DCF3405",
+   "fecha": "2026-11-06",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "f4b65793b7d9787b",
+   "puesto": "Vendedoras Comerciales Independientes. Chivilcoy",
+   "empresa": "Postulado",
+   "localidad": "Chivilcoy",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-vendedoras-comerciales-independientes-chivilcoy-en-chivilcoy-CC6CFF28E9B4A41E61373E686DCF3405",
+   "fecha": "2026-11-06",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "cfbed90ed25b4d21",
+   "puesto": "QA Tester AS",
+   "empresa": "Se precisa Urgente",
+   "localidad": "25 de Mayo",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-qa-tester-as-con-experiencia-en-as-en-25-de-mayo-849362E63FD6F00661373E686DCF3405",
+   "fecha": "2026-11-04",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "0399c385a4f5d5de",
+   "puesto": "Kineciologo",
+   "empresa": "Postulado",
+   "localidad": "9 de Julio",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-kineciologo-a-domicilio-en-9-de-julio-C33A414D1E8F4BAC61373E686DCF3405",
+   "fecha": "2026-10-30",
+   "detectado": "2026-11-12",
+   "otras_fuentes": [
+    "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-kineciologo-kinesiologo-matriculado-para-atencion-domiciliaria-en-9-de-julio-40A119342C04349061373E686DCF3405"
+   ]
+  },
+  {
+   "id": "56517bd3cfd13fac",
+   "puesto": "Administrador/a ERP NetSuite Oraclecon integración Shopify",
+   "empresa": "Postulado",
+   "localidad": "9 de Julio",
+   "rubro": "Otros",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-administradora-erp-netsuite-oraclecon-integracion-shopify-totalmente-remoto-a-jornada-completa-en-9-de-julio-683FC10AA2B98F4C61373E686DCF3405",
+   "fecha": "2026-10-26",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "32d4b794fb582639",
+   "puesto": "Soporte Técnico Eléctrico y Atención al Cliente",
+   "empresa": "Postulado",
+   "localidad": "25 de Mayo",
+   "rubro": "Tecnología",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-electrico-y-atencion-al-cliente-en-25-de-mayo-C28F433FE601363261373E686DCF3405",
+   "fecha": "2026-10-23",
+   "detectado": "2026-11-12"
+  },
+  {
+   "id": "f2f25da39443feff",
+   "puesto": "Relevador de supermercado/Zona Bragado",
+   "empresa": "Postulado",
+   "localidad": "Bragado",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-relevador-de-supermercadozona-bragado-en-bragado-C23887EB19B9D0B461373E686DCF3405",
+   "fecha": "2026-10-13",
+   "detectado": "2026-11-12"
+  }
+ ]
 }
