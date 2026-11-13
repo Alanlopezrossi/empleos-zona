@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-13T14:15-03:00",
+ "actualizado": "2026-11-13T19:43-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,19 +30,43 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 27,
+   "encontrados": 29,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 122,
+   "encontrados": 125,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 238,
+   "encontrados": 265,
    "errores": 0
   }
  },
  "ofertas": [
+  {
+   "id": "0de79e19bf03015c",
+   "puesto": "Vendedor/a",
+   "empresa": "La Fabrica SRL",
+   "localidad": "25 de Mayo",
+   "rubro": "Comercio y ventas",
+   "resumen": "Vendedor viajante plurimarca, sueldo base 3.000.000 + comisiones, jornada completa.",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-vendedor-viajante-plurimarca-con-experiencia-y-cartera-de-clientes-en-25-de-mayo-60F5AB858812BDF361373E686DCF3405",
+   "fecha": "2026-11-13",
+   "detectado": "2026-11-13"
+  },
+  {
+   "id": "b8e0b2fba6f84b45",
+   "puesto": "Cajero/as para empresa de pagos zona chivilcoy",
+   "empresa": "Adecco Argentina S.A.",
+   "localidad": "Chivilcoy",
+   "rubro": "Comercio y ventas",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-cajeroas-para-empresa-de-pagos-zona-chivilcoy-en-chivilcoy-D44E0C9A49F2777861373E686DCF3405",
+   "fecha": "2026-11-13",
+   "detectado": "2026-11-13"
+  },
   {
    "id": "daa0abfad40c53db",
    "puesto": "Administrativo/a de Atención al Cliente y Postventa",
@@ -102,6 +126,18 @@
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-vendedoras-comerciales-independientes-bragado-en-bragado-35A0EAE70BC7FDDA61373E686DCF3405",
    "fecha": "2026-11-11",
    "detectado": "2026-11-12"
+  },
+  {
+   "id": "f5c5e69beae41c82",
+   "puesto": "Franquiciado",
+   "empresa": "La Payada",
+   "localidad": "Roque Pérez",
+   "rubro": "Gastronomía y hotelería",
+   "resumen": "Franquicia de empanadas y pizzas, oportunidad de negocio propio, jornada flexible, capacitación incluida.",
+   "fuente": "Web",
+   "url": "https://lapayada.com.ar/",
+   "fecha": "2026-11-10",
+   "detectado": "2026-11-13"
   },
   {
    "id": "4b895ae8fe473fa6",
