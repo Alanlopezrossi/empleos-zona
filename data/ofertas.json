@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-12T22:55-03:00",
+ "actualizado": "2026-11-13T14:15-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,11 +34,11 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 125,
+   "encontrados": 122,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 210,
+   "encontrados": 238,
    "errores": 0
   }
  },
@@ -284,18 +284,6 @@
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-electrico-y-atencion-al-cliente-en-25-de-mayo-C28F433FE601363261373E686DCF3405",
    "fecha": "2026-10-23",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "f2f25da39443feff",
-   "puesto": "Relevador de supermercado/Zona Bragado",
-   "empresa": "",
-   "localidad": "Bragado",
-   "rubro": "Comercio y ventas",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-relevador-de-supermercadozona-bragado-en-bragado-C23887EB19B9D0B461373E686DCF3405",
-   "fecha": "2026-10-13",
    "detectado": "2026-11-12"
   }
  ]
