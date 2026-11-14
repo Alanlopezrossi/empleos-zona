@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-13T19:43-03:00",
+ "actualizado": "2026-11-14T04:39-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,15 +30,15 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 29,
+   "encontrados": 28,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 125,
+   "encontrados": 123,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 265,
+   "encontrados": 240,
    "errores": 0
   }
  },
@@ -88,18 +88,6 @@
    "resumen": "",
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ejecutivo-de-ventas-planes-de-salud-en-saladillo-00438E1D8D441FC861373E686DCF3405",
-   "fecha": "2026-11-12",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "7c994a3eab6a3ab9",
-   "puesto": "Operarios de mantenimiento",
-   "empresa": "",
-   "localidad": "Lobos",
-   "rubro": "Industria y producción",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-operarios-de-mantenimiento-tecnicos-en-lobos-A5801369DB08EB8261373E686DCF3405",
    "fecha": "2026-11-12",
    "detectado": "2026-11-12"
   },
