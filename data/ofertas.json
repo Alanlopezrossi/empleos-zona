@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-17T00:58-03:00",
+ "actualizado": "2026-11-17T15:39-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,16 +30,15 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 28,
+   "encontrados": 27,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 105,
-   "errores": 2,
-   "ultimo_error": "Alberti: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Alberti%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%20laboral%22%20O"
+   "encontrados": 121,
+   "errores": 0
   },
   "Buscador web": {
-   "encontrados": 239,
+   "encontrados": 200,
    "errores": 0
   }
  },
@@ -77,18 +76,6 @@
    "resumen": "",
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-administrativoa-de-atencion-al-cliente-y-postventa-en-25-de-mayo-4353F881F6B9935E61373E686DCF3405",
-   "fecha": "2026-11-12",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "611ad31bb1057c06",
-   "puesto": "Ejecutivo de Ventas",
-   "empresa": "",
-   "localidad": "Saladillo",
-   "rubro": "Comercio y ventas",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-ejecutivo-de-ventas-planes-de-salud-en-saladillo-00438E1D8D441FC861373E686DCF3405",
    "fecha": "2026-11-12",
    "detectado": "2026-11-12"
   },
