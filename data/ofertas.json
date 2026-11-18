@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-17T15:39-03:00",
+ "actualizado": "2026-11-17T23:57-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,15 +34,27 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 121,
+   "encontrados": 128,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 200,
+   "encontrados": 229,
    "errores": 0
   }
  },
  "ofertas": [
+  {
+   "id": "42d361b775b02691",
+   "puesto": "mecánico electrónico",
+   "empresa": "WESTEN SERVICE CHIVILCOY S.A.",
+   "localidad": "Chivilcoy",
+   "rubro": "Construcción y oficios",
+   "resumen": "",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-mecanico-electronico-con-experiencia-en-diagnositco-de-fallas-en-chivilcoy-F6D0F69F187A7AD561373E686DCF3405",
+   "fecha": "2026-11-17",
+   "detectado": "2026-11-17"
+  },
   {
    "id": "0de79e19bf03015c",
    "puesto": "Vendedor/a",
