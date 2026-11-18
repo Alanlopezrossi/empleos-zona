@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-17T23:57-03:00",
+ "actualizado": "2026-11-18T15:11-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,19 +30,31 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 27,
+   "encontrados": 28,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 128,
+   "encontrados": 118,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 229,
+   "encontrados": 230,
    "errores": 0
   }
  },
  "ofertas": [
+  {
+   "id": "42917e9bc952cac4",
+   "puesto": "Topógrafo/a",
+   "empresa": "INGEA AGRIMENSURA SRL",
+   "localidad": "Bragado",
+   "rubro": "Construcción y oficios",
+   "resumen": "Topógrafo/a de obra, 4.000.000 mensual, jornada completa, Bragado.",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-topografoa-de-obra-en-bragado-8402C44AF3166A0D61373E686DCF3405",
+   "fecha": "2026-11-18",
+   "detectado": "2026-11-18"
+  },
   {
    "id": "42d361b775b02691",
    "puesto": "mecánico electrónico",
