@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-19T23:24-03:00",
+ "actualizado": "2026-11-20T14:53-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,15 +30,15 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 28,
+   "encontrados": 26,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 135,
+   "encontrados": 118,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 220,
+   "encontrados": 230,
    "errores": 0
   }
  },
@@ -188,18 +188,6 @@
    "detectado": "2026-11-12"
   },
   {
-   "id": "ad9075693b92c5dd",
-   "puesto": "Representante comercial — Reuniones y seguimiento",
-   "empresa": "",
-   "localidad": "25 de Mayo",
-   "rubro": "Comercio y ventas",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-representante-comercial-reuniones-y-seguimiento-remoto-en-25-de-mayo-B13975F7D15C528561373E686DCF3405",
-   "fecha": "2026-11-08",
-   "detectado": "2026-11-12"
-  },
-  {
    "id": "e603a0689e159857",
    "puesto": "Técnico de Radades y VLR",
    "empresa": "",
@@ -208,18 +196,6 @@
    "resumen": "",
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-radades-y-vlr-region-noroeste-de-buenos-aires-en-bragado-DBA1ACDFB5CE7E1E61373E686DCF3405",
-   "fecha": "2026-11-08",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "73146c06e2fd2a00",
-   "puesto": "Vigilador General",
-   "empresa": "",
-   "localidad": "Chivilcoy",
-   "rubro": "Seguridad",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-vigilador-general-en-chivilcoy-768C011DB65F1E5961373E686DCF3405",
    "fecha": "2026-11-08",
    "detectado": "2026-11-12"
   },
