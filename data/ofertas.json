@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-22T05:07-03:00",
+ "actualizado": "2026-11-22T14:13-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,15 +34,27 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 125,
+   "encontrados": 119,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 209,
+   "encontrados": 140,
    "errores": 0
   }
  },
  "ofertas": [
+  {
+   "id": "b40f3d8879f1b4a0",
+   "puesto": "Vendedor",
+   "empresa": "Distribuidora Babilonia",
+   "localidad": "Saladillo",
+   "rubro": "Comercio y ventas",
+   "resumen": "Vendedor para equipo de trabajo, requisitos no especificados.",
+   "fuente": "Noticias locales",
+   "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOeU1LaERUODVtb0R0c1hsSGFUeEtuTHNCdVlMLWZSQVZzWXZtZU9kTWZyekhMUnZ5OXdTV2tyRnpZNHZCQUZyMncwU21CdXdSeHpNb1REUzNoMEpUbkd1RlIzNk90cW5PZElWMjlXQmx3VXVkaHBwZG1CUkhxU19hV1JjeGlTN1g2QjdJem1LY3NJeE5vUzMyZXMwYUFBXzdmLTdKSzdJZjM1VnBMb215eFFYV0xPRVJ0NXdWVURIUXhlYjhhX2pFWHpzLWNtRDJp?oc=5",
+   "fecha": "2026-11-20",
+   "detectado": "2026-11-22"
+  },
   {
    "id": "42917e9bc952cac4",
    "puesto": "Topógrafo/a",
