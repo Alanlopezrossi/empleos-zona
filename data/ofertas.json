@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-22T19:33-03:00",
+ "actualizado": "2026-11-23T06:12-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,11 +34,11 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 154,
+   "encontrados": 115,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 270,
+   "encontrados": 212,
    "errores": 0
   }
  },
@@ -284,18 +284,6 @@
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-administradora-erp-netsuite-oraclecon-integracion-shopify-totalmente-remoto-a-jornada-completa-en-9-de-julio-683FC10AA2B98F4C61373E686DCF3405",
    "fecha": "2026-10-26",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "32d4b794fb582639",
-   "puesto": "Soporte Técnico Eléctrico y Atención al Cliente",
-   "empresa": "",
-   "localidad": "25 de Mayo",
-   "rubro": "Tecnología",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-soporte-tecnico-electrico-y-atencion-al-cliente-en-25-de-mayo-C28F433FE601363261373E686DCF3405",
-   "fecha": "2026-10-23",
    "detectado": "2026-11-12"
   }
  ]
