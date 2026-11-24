@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-24T08:05-03:00",
+ "actualizado": "2026-11-24T20:05-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,15 +30,16 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 25,
+   "encontrados": 26,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 214,
-   "errores": 0
+   "encontrados": 195,
+   "errores": 1,
+   "ultimo_error": "General Alvear: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22General%20Alvear%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%"
   },
   "Buscador web": {
-   "encontrados": 199,
+   "encontrados": 204,
    "errores": 0
   }
  },
