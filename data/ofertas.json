@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-25T06:54-03:00",
+ "actualizado": "2026-11-25T19:37-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,20 +30,55 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 26,
+   "encontrados": 29,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 0,
-   "errores": 9,
-   "ultimo_error": "Chivilcoy: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22Chivilcoy%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%20laboral%"
+   "encontrados": 190,
+   "errores": 0
   },
   "Buscador web": {
-   "encontrados": 200,
+   "encontrados": 210,
    "errores": 0
   }
  },
  "ofertas": [
+  {
+   "id": "63c61e07ee3e56e0",
+   "puesto": "Comercial Sr. Agro",
+   "empresa": "B&B Consultores",
+   "localidad": "25 de Mayo",
+   "rubro": "Comercio y ventas",
+   "resumen": "Comercial senior en agro, experiencia en ventas y negociación, jornada completa.",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-comercial-sr-agro-en-25-de-mayo-5819F402EE2DC61761373E686DCF3405",
+   "fecha": "2026-11-25",
+   "detectado": "2026-11-25"
+  },
+  {
+   "id": "e1d5ad4129239277",
+   "puesto": "Comercial",
+   "empresa": "B&B Consultores",
+   "localidad": "9 de Julio",
+   "rubro": "Comercio y ventas",
+   "resumen": "Comercial senior agro, jornada completa, salario $111.111, en 9 de Julio.",
+   "fuente": "Computrabajo",
+   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-comercial-sr-agro-en-9-de-julio-57A8A65998F2902461373E686DCF3405",
+   "fecha": "2026-11-25",
+   "detectado": "2026-11-25"
+  },
+  {
+   "id": "05a13d549bbaf60a",
+   "puesto": "Convocatoria CePEAC",
+   "empresa": "CePEAC SALADILLO",
+   "localidad": "Saladillo",
+   "rubro": "Sector público",
+   "resumen": "Convocatoria pública para puestos en CePEAC, requisitos y proceso de selección.",
+   "fuente": "Noticias locales",
+   "url": "https://news.google.com/rss/articles/CBMibkFVX3lxTE4xbEZwV29mUXA0ZFpLY01YWllodkRqbUY5bVFBTFBmT00tLW9RT3hZcjVHVk5DWDZkSVBiYmVFMlZual9oVEhLVmxvd254eXF3SVRQN0VBYUdwVi04bm1DeFJhOFFLWXFXbEc5aElR0gFuQVVfeXFMTjFsRnBXb2ZRcDRkWktjTVhaWWh2RGptRjltUUFMUGZPTS0tb1FPeFlyNUdWTkNYNmRJUGJiZUUyVm5qX2hUSEtWbG93bnh5cXdJVFA3RUFhR3BWLThubUN4UmE4UUtZcVdsRzloSVE?oc=5",
+   "fecha": "2026-11-20",
+   "detectado": "2026-11-25"
+  },
   {
    "id": "b40f3d8879f1b4a0",
    "puesto": "Vendedor",
