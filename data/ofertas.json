@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-24T20:05-03:00",
+ "actualizado": "2026-11-25T06:54-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,12 +34,12 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 195,
-   "errores": 1,
-   "ultimo_error": "General Alvear: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22General%20Alvear%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%"
+   "encontrados": 0,
+   "errores": 9,
+   "ultimo_error": "Chivilcoy: 503 Server Error: Service Unavailable for url: https://news.google.com/rss/search?q=%22Chivilcoy%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%20laboral%"
   },
   "Buscador web": {
-   "encontrados": 204,
+   "encontrados": 200,
    "errores": 0
   }
  },
