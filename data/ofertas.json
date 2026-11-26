@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-25T19:37-03:00",
+ "actualizado": "2026-11-26T06:39-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -34,11 +34,12 @@
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 190,
-   "errores": 0
+   "encontrados": 215,
+   "errores": 1,
+   "ultimo_error": "Chivilcoy: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Chivilcoy%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%20laboral%22"
   },
   "Buscador web": {
-   "encontrados": 210,
+   "encontrados": 140,
    "errores": 0
   }
  },
@@ -309,18 +310,6 @@
    "otras_fuentes": [
     "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-kineciologo-kinesiologo-matriculado-para-atencion-domiciliaria-en-9-de-julio-40A119342C04349061373E686DCF3405"
    ]
-  },
-  {
-   "id": "56517bd3cfd13fac",
-   "puesto": "Administrador/a ERP NetSuite Oraclecon integración Shopify",
-   "empresa": "",
-   "localidad": "9 de Julio",
-   "rubro": "Tecnología",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-administradora-erp-netsuite-oraclecon-integracion-shopify-totalmente-remoto-a-jornada-completa-en-9-de-julio-683FC10AA2B98F4C61373E686DCF3405",
-   "fecha": "2026-10-26",
-   "detectado": "2026-11-12"
   }
  ]
 }
