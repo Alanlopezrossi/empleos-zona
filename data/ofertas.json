@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-26T06:39-03:00",
+ "actualizado": "2026-11-26T19:25-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,16 +30,15 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 29,
+   "encontrados": 30,
    "errores": 0
   },
   "Google Noticias": {
    "encontrados": 215,
-   "errores": 1,
-   "ultimo_error": "Chivilcoy: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=%22Chivilcoy%22%20%28%22busca%20personal%22%20OR%20%22se%20necesita%22%20OR%20%22b%C3%BAsqueda%20laboral%22"
+   "errores": 0
   },
   "Buscador web": {
-   "encontrados": 140,
+   "encontrados": 260,
    "errores": 0
   }
  },
