@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-11-27T19:05-03:00",
+ "actualizado": "2026-11-28T05:57-03:00",
  "localidades": [
   "25 de Mayo",
   "Saladillo",
@@ -30,15 +30,15 @@
  ],
  "fuentes": {
   "Computrabajo": {
-   "encontrados": 30,
+   "encontrados": 29,
    "errores": 0
   },
   "Google Noticias": {
-   "encontrados": 192,
+   "encontrados": 225,
    "errores": 0
   },
   "Buscador web": {
-   "encontrados": 120,
+   "encontrados": 178,
    "errores": 0
   }
  },
@@ -245,18 +245,6 @@
    "fuente": "Computrabajo",
    "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-empleado-polivalente-ecommerce-picking-chivilcoy-en-chivilcoy-A3DEBF0C633ABB0061373E686DCF3405",
    "fecha": "2026-11-07",
-   "detectado": "2026-11-12"
-  },
-  {
-   "id": "8445ace994fe6fd2",
-   "puesto": "Técnico de Mantenimiento de Equipos Industriales / mov de suelos y mov materiales",
-   "empresa": "",
-   "localidad": "Bragado",
-   "rubro": "Industria y producción",
-   "resumen": "",
-   "fuente": "Computrabajo",
-   "url": "https://ar.computrabajo.com/ofertas-de-trabajo/oferta-de-trabajo-de-tecnico-de-mantenimiento-de-equipos-industriales-mov-de-suelos-y-mov-materiales-zona-bragado-en-bragado-A968D1DB037EDB4C61373E686DCF3405",
-   "fecha": "2026-11-06",
    "detectado": "2026-11-12"
   },
   {
